@@ -137,68 +137,77 @@
 
 <svelte:head><title>{quiz.title}</title></svelte:head>
 
-{#if !showResults}
-    <div class="mx-auto my-6 max-w-xl">
-        <h2 class="mb-4 text-xl">
-            Question {currentQuestionIndex + 1} of {quiz.questions.length}
-        </h2>
-        <form on:submit={checkAnswer}>
-            <h3 class="mb-4 text-3xl font-semibold tracking-wide">
-                {quiz.questions[currentQuestionIndex].question}
-            </h3>
+<div class="m-6 flex justify-center">
+    {#if !showResults}
+        <div class="w-[600px]">
+            <h2 class="mb-4 text-xl">
+                Question {currentQuestionIndex + 1} of {quiz.questions.length}
+            </h2>
+            <form on:submit={checkAnswer}>
+                <h3 class="mb-4 text-3xl font-semibold tracking-wide">
+                    {quiz.questions[currentQuestionIndex].question}
+                </h3>
 
-            <div class="flex flex-col">
-                {#each Object.keys(quiz.questions[currentQuestionIndex].options) as option}
-                    <label class="mb-2 inline-flex items-center" for={option}>
-                        <input
-                            class="form-radio mr-2 h-5 w-5 text-indigo-500"
-                            bind:group={selectedOption}
-                            type="radio"
-                            name="answer"
-                            id={option}
-                            value={option}
-                            required
-                        />
-                        <span class="text-gray-700">{option}</span>
-                    </label>
-                {/each}
-            </div>
+                <div class="flex flex-col">
+                    {#each Object.keys(quiz.questions[currentQuestionIndex].options) as option}
+                        <label
+                            class="mb-2 inline-flex items-center"
+                            for={option}
+                        >
+                            <input
+                                class="form-radio mr-2 h-5 w-5 text-indigo-500"
+                                bind:group={selectedOption}
+                                type="radio"
+                                name="answer"
+                                id={option}
+                                value={option}
+                                required
+                            />
+                            <span class="text-gray-700">{option}</span>
+                        </label>
+                    {/each}
+                </div>
+                <button
+                    class="mt-4 rounded bg-indigo-500 px-4 py-2 font-semibold text-white hover:bg-indigo-600"
+                    type="submit">Next</button
+                >
+            </form>
+        </div>
+    {:else}
+        <div class="w-[600px]">
+            <h2 class="mb-4 text-2xl font-semibold">Results</h2>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="border-b border-gray-300 bg-gray-200">
+                        <th class="px-4 py-2 text-left">Question</th>
+                        <th class="px-4 py-2 text-left">Your Answer</th>
+                        <th class="px-4 py-2 text-left">Correct Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each userAnswers as answer}
+                        <tr
+                            class="{getRowColor(
+                                answer,
+                            )} border-b border-gray-300"
+                        >
+                            <td class="px-4 py-2">{answer.question}</td>
+                            <td class="px-4 py-2">{answer.selectedAnswer}</td>
+                            <td class="px-4 py-2">{answer.correctAnswer}</td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+            <p class="mt-4">
+                Your score: {userAnswers.filter(
+                    ({ selectedAnswer, correctAnswer }) =>
+                        selectedAnswer === correctAnswer,
+                ).length}/{quiz.questions.length}
+            </p>
             <button
                 class="mt-4 rounded bg-indigo-500 px-4 py-2 font-semibold text-white hover:bg-indigo-600"
-                type="submit">Next</button
+                on:click={resetQuiz}>Restart Quiz</button
             >
-        </form>
-    </div>
-{:else}
-    <div class="mx-auto my-6 max-w-xl">
-        <h2 class="mb-4 text-2xl font-semibold">Results</h2>
-        <table class="w-full border-collapse border border-gray-300">
-            <thead>
-                <tr class="border-b border-gray-300 bg-gray-200">
-                    <th class="px-4 py-2 text-left">Question</th>
-                    <th class="px-4 py-2 text-left">Your Answer</th>
-                    <th class="px-4 py-2 text-left">Correct Answer</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each userAnswers as answer}
-                    <tr class="{getRowColor(answer)} border-b border-gray-300">
-                        <td class="px-4 py-2">{answer.question}</td>
-                        <td class="px-4 py-2">{answer.selectedAnswer}</td>
-                        <td class="px-4 py-2">{answer.correctAnswer}</td>
-                    </tr>
-                {/each}
-            </tbody>
-        </table>
-        <p class="mt-4">
-            Your score: {userAnswers.filter(
-                ({ selectedAnswer, correctAnswer }) =>
-                    selectedAnswer === correctAnswer,
-            ).length}/{quiz.questions.length}
-        </p>
-        <button
-            class="mt-4 rounded bg-indigo-500 px-4 py-2 font-semibold text-white hover:bg-indigo-600"
-            on:click={resetQuiz}>Restart Quiz</button
-        >
-    </div>
-{/if}
+        </div>
+    {/if}
+</div>

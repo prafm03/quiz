@@ -4,7 +4,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Comic Sans MS", "sans"],
+        sans: [
+          "Comic Sans",
+          "Comic Sans MS",
+          "Chalkboard",
+          "ChalkboardSE-Regular",
+          "sans-serif",
+        ],
       },
     },
   },
