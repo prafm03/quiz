@@ -1,7 +1,7 @@
 <!-- App.svelte -->
 <script>
     const quiz = {
-        title: "Ashton on Mersey Greek Club Gods Quiz",
+        title: "Greek Club Gods Quiz",
         questions: [
             {
                 question: "Who was the god of fire?",
@@ -95,10 +95,6 @@
     let showResults = false;
     let selectedOption = null;
 
-    function loadQuestion() {
-        return quiz.questions[currentQuestionIndex];
-    }
-
     function checkAnswer() {
         if (selectedOption) {
             const answer = selectedOption;
@@ -139,6 +135,8 @@
     }
 </script>
 
+<svelte:head><title>{quiz.title}</title></svelte:head>
+
 {#if !showResults}
     <div class="mx-auto my-6 max-w-xl">
         <h2 class="mb-4 text-xl">
@@ -172,7 +170,7 @@
         </form>
     </div>
 {:else}
-    <div class="mx-auto max-w-xl">
+    <div class="mx-auto my-6 max-w-xl">
         <h2 class="mb-4 text-2xl font-semibold">Results</h2>
         <table class="w-full border-collapse border border-gray-300">
             <thead>
