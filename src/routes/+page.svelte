@@ -141,7 +141,7 @@
 
 {#if !showResults}
     <div class="mx-auto my-6 max-w-xl">
-        <h2 class="mb-4 text-xl text-gray-600">
+        <h2 class="mb-4 text-xl">
             Question {currentQuestionIndex + 1} of {quiz.questions.length}
         </h2>
         <form on:submit={checkAnswer}>
