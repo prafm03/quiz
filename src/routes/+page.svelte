@@ -137,9 +137,9 @@
 
 <svelte:head><title>{quiz.title}</title></svelte:head>
 
-<div class="m-6 flex justify-center">
+<div class="flex justify-center">
     {#if !showResults}
-        <div class="w-[600px]">
+        <div class="m-6 w-[600px]">
             <h2 class="mb-4 text-xl">
                 Question {currentQuestionIndex + 1} of {quiz.questions.length}
             </h2>
@@ -174,7 +174,7 @@
             </form>
         </div>
     {:else}
-        <div class="w-[600px]">
+        <div class="m-6 w-[600px]">
             <h2 class="mb-4 text-2xl font-semibold">Results</h2>
             <table class="w-full border-collapse border border-gray-300">
                 <thead>
